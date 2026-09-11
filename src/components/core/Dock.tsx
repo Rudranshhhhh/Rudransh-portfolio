@@ -10,7 +10,7 @@ import { personal } from "../../data/config";
 // Apps shown in dock (ordered)
 const DOCK_APPS: AppId[] = [
   "projects", "systemProfile", "skills", "lab", "terminal",
-  "systemLog", "resume", "contact", "settings",
+  "achievements", "systemLog", "resume", "contact", "settings",
 ];
 
 function useClock() {

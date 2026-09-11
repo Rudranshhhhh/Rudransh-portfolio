@@ -1,61 +1,63 @@
 import type { LabExperiment } from "../types";
 
 // ─────────────────────────────────────────────────────────────────
-//  Rudransh Lab — Experiments & Prototypes
+//  Rudransh Lab — Active Experiments
 // ─────────────────────────────────────────────────────────────────
 
 export const labExperiments: LabExperiment[] = [
   {
-    id:      "lab-cv",
+    id:      "lab-voice",
     index:   "[01]",
-    title:   "Computer Vision",
-    domain:  "Perception Systems",
-    description: "Experimenting with real-time object detection, semantic segmentation, and depth estimation. Current focus: running inference at the edge with quantized models.",
+    title:   "Voice AI Systems",
+    domain:  "Real-Time Voice Pipelines",
+    description:
+      "Pushing the limits of low-latency voice interaction. Current work: minimizing end-to-end latency in the STT → LLM → streaming TTS loop. Testing different STT providers, chunked TTS streaming strategies, and LLM inference backends (Groq vs local).",
     status:  "active",
-    tags:    ["pytorch", "opencv", "onnx", "edge-inference"],
-    hasDemo: true,
-    demoComponent: "CVDemo",
+    tags:    ["stt", "tts", "streaming", "groq", "voice-agents"],
+    hasDemo: false,
   },
   {
-    id:      "lab-nav",
+    id:      "lab-multiagent",
     index:   "[02]",
-    title:   "Autonomous Navigation",
-    domain:  "Robotics / Planning",
-    description: "Testing different path-planning algorithms on a physical robot. Comparing A*, RRT, and learned navigation policies in real-world cluttered environments.",
+    title:   "Multi-Agent Orchestration",
+    domain:  "Agentic AI Systems",
+    description:
+      "Experimenting with different agent topologies — hierarchical, peer-to-peer, and event-driven. Testing MCP as a universal tool interface versus custom function-calling schemas. Interested in predictable failure modes and graceful degradation.",
     status:  "active",
-    tags:    ["ros2", "slam", "path-planning", "python"],
+    tags:    ["multi-agent", "mcp", "langgraph", "orchestration"],
     hasDemo: false,
   },
   {
     id:      "lab-llm",
     index:   "[03]",
     title:   "LLM Systems",
-    domain:  "AI / Language Models",
-    description: "Building with LLMs at the systems level — RAG pipelines, tool-use agents, structured output generation. Interested in reliability and predictability rather than demos.",
+    domain:  "Language Model Engineering",
+    description:
+      "Exploring RAG pipeline optimization, structured output generation, and multi-provider failover patterns. Current focus: building LLM applications that behave consistently in production, not just in demos.",
     status:  "active",
-    tags:    ["langchain", "openai", "rag", "agents"],
-    hasDemo: true,
-    demoComponent: "LLMDemo",
-  },
-  {
-    id:      "lab-robotics",
-    index:   "[04]",
-    title:   "Robotics Platform",
-    domain:  "Embedded Systems",
-    description: "Designing a modular robot hardware platform. Swappable sensor mounts, standardized power distribution, and a clean interface between hardware and ROS2 middleware.",
-    status:  "active",
-    tags:    ["hardware", "ros2", "c++", "embedded"],
+    tags:    ["rag", "openai", "anthropic", "groq", "structured-output"],
     hasDemo: false,
   },
   {
-    id:      "lab-web",
-    index:   "[05]",
-    title:   "Web Experiments",
-    domain:  "Interface Engineering",
-    description: "Exploring creative interfaces, novel interaction patterns, and the boundary between software and visual design. This portfolio is one of them.",
+    id:      "lab-backend",
+    index:   "[04]",
+    title:   "AI Backend Patterns",
+    domain:  "Backend / Systems",
+    description:
+      "Investigating patterns for integrating AI inference into Flask/FastAPI backends. Streaming responses, async inference queues, rate-limit-aware multi-provider routing, and caching strategies for deterministic LLM calls.",
     status:  "active",
-    tags:    ["react", "typescript", "framer-motion", "design"],
-    hasDemo: true,
-    demoComponent: "WebDemo",
+    tags:    ["flask", "fastapi", "async", "docker", "streaming"],
+    hasDemo: false,
+  },
+  {
+    id:      "lab-proctoring",
+    index:   "[05]",
+    title:   "In-Browser AI Proctoring",
+    domain:  "WebAssembly / Computer Vision",
+    description:
+      "Extending the WebAssembly-based proctoring engine from Intervix. Testing more sophisticated focus-tracking heuristics and exploring lightweight on-device face-detection models that run without a server.",
+    status:  "paused",
+    tags:    ["webassembly", "opencv", "browser", "privacy"],
+    hasDemo: false,
   },
 ];

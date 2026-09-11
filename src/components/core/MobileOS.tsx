@@ -16,7 +16,7 @@ const ResumeApp     = lazy(() => import("../apps/ResumeApp").then(m => ({ defaul
 const ContactApp    = lazy(() => import("../apps/ContactApp").then(m => ({ default: m.ContactApp })));
 const SettingsApp   = lazy(() => import("../apps/SettingsApp").then(m => ({ default: m.SettingsApp })));
 
-function AppLoader() {
+const AchievementsApp = lazy(() => import("../apps/AchievementsApp").then(m => ({ default: m.AchievementsApp })));
   return (
     <div className="flex items-center justify-center h-full">
       <div className="font-mono text-xs text-os-text-muted animate-pulse">loading...</div>

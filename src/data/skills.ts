@@ -1,79 +1,91 @@
 import type { SkillCategory } from "../types";
 
 // ─────────────────────────────────────────────────────────────────
-//  Skills / Capabilities
+//  Skills — Rudransh Singh
+//  Sourced directly from CV skill categories
 // ─────────────────────────────────────────────────────────────────
 
 export const skillCategories: SkillCategory[] = [
   {
     id:    "languages",
-    label: "Languages",
+    label: "Programming",
     icon:  "{ }",
     skills: [
-      { name: "Python",           level: "advanced",    description: "Primary language for AI, robotics, scripting" },
-      { name: "C++",              level: "proficient",  description: "Embedded systems, performance-critical code" },
-      { name: "TypeScript",       level: "proficient",  description: "Preferred for all web work" },
-      { name: "JavaScript",       level: "proficient",  description: "Web, Node.js" },
-      { name: "Java",             level: "comfortable", description: "University coursework, OOP" },
-      { name: "C",                level: "comfortable", description: "Systems programming, microcontrollers" },
-      { name: "SQL",              level: "comfortable", description: "Relational databases, queries" },
-      { name: "Bash/Shell",       level: "comfortable", description: "Automation, Linux workflows" },
+      { name: "Python",          level: "advanced",    description: "Primary language for all AI/backend work" },
+      { name: "JavaScript",      level: "proficient",  description: "Frontend, Node, Canvas" },
+      { name: "TypeScript",      level: "proficient",  description: "Typed JS for production apps" },
+      { name: "Java",            level: "comfortable", description: "OOP, university coursework" },
+      { name: "HTML5",           level: "proficient",  description: "Semantic markup, Canvas API" },
+      { name: "CSS3",            level: "proficient",  description: "Layouts, animations" },
     ],
   },
   {
-    id:    "ai_ml",
-    label: "AI / ML",
+    id:    "ai_voice",
+    label: "AI / Voice AI",
     icon:  "◈",
     skills: [
-      { name: "PyTorch",          level: "proficient",  description: "Deep learning, custom training loops" },
-      { name: "Computer Vision",  level: "proficient",  description: "Object detection, segmentation" },
-      { name: "OpenCV",           level: "proficient",  description: "Image processing pipelines" },
-      { name: "LLMs / Prompting", level: "comfortable", description: "Prompt engineering, RAG, agents" },
-      { name: "scikit-learn",     level: "comfortable", description: "Classical ML" },
-      { name: "ONNX / TensorRT",  level: "learning",    description: "Model deployment & optimization" },
+      { name: "LLM Orchestration",          level: "advanced",    description: "Multi-provider: Groq, OpenAI, Anthropic, Gemini" },
+      { name: "RAG",                        level: "advanced",    description: "Retrieval-augmented generation pipelines" },
+      { name: "Multi-Agent Systems",        level: "advanced",    description: "Task decomposition, parallel agents, MCP" },
+      { name: "Speech-to-Text (STT)",       level: "proficient",  description: "Real-time voice pipelines" },
+      { name: "Text-to-Speech (TTS)",       level: "proficient",  description: "Streaming TTS for low-latency voice" },
+      { name: "Voice Agents",               level: "advanced",    description: "Autonomous voice interaction systems" },
+      { name: "MCP",                        level: "proficient",  description: "Model Context Protocol for tool use" },
+      { name: "GitHub Copilot",             level: "comfortable", description: "AI-assisted development" },
     ],
   },
   {
-    id:    "robotics",
-    label: "Robotics",
+    id:    "backend",
+    label: "Backend / APIs",
     icon:  "⊕",
     skills: [
-      { name: "ROS2",             level: "proficient",  description: "Navigation stack, nodes, DDS" },
-      { name: "Arduino",          level: "proficient",  description: "Firmware, motor control" },
-      { name: "Raspberry Pi",     level: "proficient",  description: "Embedded Linux, I2C/SPI/UART" },
-      { name: "SLAM",             level: "comfortable", description: "Mapping & localization" },
-      { name: "PID Control",      level: "comfortable", description: "Motor & motion control" },
-      { name: "Sensor Fusion",    level: "comfortable", description: "IMU, LIDAR, odometry" },
+      { name: "Flask",           level: "advanced",    description: "Primary Python web framework" },
+      { name: "REST API Design", level: "advanced",    description: "Design and implementation" },
+      { name: "Node.js",         level: "comfortable", description: "JS backend, Express" },
+      { name: "FastAPI",         level: "comfortable", description: "Async Python APIs" },
+      { name: "Docker",          level: "proficient",  description: "Containerization, deployment" },
     ],
   },
   {
-    id:    "web",
-    label: "Web & Software",
+    id:    "frontend",
+    label: "Frontend",
     icon:  "⌘",
     skills: [
-      { name: "React / Next.js",  level: "proficient",  description: "Frontend, SSR, full-stack" },
-      { name: "Node.js",          level: "comfortable", description: "Backend APIs, Express" },
-      { name: "REST APIs",        level: "proficient",  description: "Design & implementation" },
-      { name: "PostgreSQL",       level: "comfortable", description: "Relational DB" },
-      { name: "Docker",           level: "comfortable", description: "Containerization, compose" },
-      { name: "Git",              level: "advanced",    description: "Version control, workflow" },
+      { name: "React.js",        level: "proficient",  description: "Component-driven UIs" },
+      { name: "Next.js",         level: "proficient",  description: "Production React, SSR" },
     ],
   },
   {
-    id:    "systems",
-    label: "Systems & Tools",
+    id:    "databases",
+    label: "Databases",
     icon:  "◻",
     skills: [
-      { name: "Linux",            level: "proficient",  description: "Primary development OS" },
-      { name: "VS Code / Neovim", level: "advanced",    description: "Daily drivers" },
-      { name: "GitHub Actions",   level: "comfortable", description: "CI/CD pipelines" },
-      { name: "Figma",            level: "learning",    description: "UI/UX design basics" },
-      { name: "AWS (basics)",     level: "learning",    description: "EC2, S3, basics" },
+      { name: "MongoDB",         level: "comfortable", description: "Document store, NoSQL" },
+      { name: "MySQL",           level: "comfortable", description: "Relational DB" },
+    ],
+  },
+  {
+    id:    "cs_fundamentals",
+    label: "Computer Science",
+    icon:  "∑",
+    skills: [
+      { name: "Data Structures & Algorithms", level: "proficient",  description: "Core CS fundamentals" },
+      { name: "Object-Oriented Programming",  level: "proficient",  description: "Design patterns, OOP principles" },
+      { name: "System Design",                level: "comfortable", description: "Distributed systems basics" },
+    ],
+  },
+  {
+    id:    "tools",
+    label: "Tools",
+    icon:  "◑",
+    skills: [
+      { name: "Git",             level: "proficient",  description: "Version control" },
+      { name: "GitHub",          level: "proficient",  description: "Collaboration, CI" },
+      { name: "Postman",         level: "comfortable", description: "API testing and documentation" },
     ],
   },
 ];
 
-// Skill level metadata
 export const skillLevelMeta = {
   learning:    { label: "Learning",    color: "#4a4a68", bars: 1 },
   comfortable: { label: "Comfortable", color: "#4f8ef7", bars: 2 },

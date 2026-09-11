@@ -1,7 +1,7 @@
 import type { AppDefinition } from "../types";
 
 // ─────────────────────────────────────────────────────────────────
-//  Application Registry — defines all desktop apps
+//  Application Registry
 // ─────────────────────────────────────────────────────────────────
 
 export const appRegistry: AppDefinition[] = [
@@ -10,8 +10,8 @@ export const appRegistry: AppDefinition[] = [
     title:       "Projects",
     icon:        "📁",
     description: "Project file explorer",
-    defaultSize: { width: 900, height: 620 },
-    minSize:     { width: 600, height: 420 },
+    defaultSize: { width: 920, height: 640 },
+    minSize:     { width: 620, height: 440 },
     singleton:   true,
   },
   {
@@ -19,17 +19,17 @@ export const appRegistry: AppDefinition[] = [
     title:       "System Profile",
     icon:        "🧠",
     description: "About Rudransh",
-    defaultSize: { width: 740, height: 560 },
-    minSize:     { width: 500, height: 400 },
+    defaultSize: { width: 720, height: 580 },
+    minSize:     { width: 500, height: 420 },
     singleton:   true,
   },
   {
     id:          "skills",
     title:       "Capabilities",
     icon:        "⚙",
-    description: "System capabilities & skills",
-    defaultSize: { width: 820, height: 600 },
-    minSize:     { width: 580, height: 420 },
+    description: "Technical capabilities",
+    defaultSize: { width: 820, height: 620 },
+    minSize:     { width: 580, height: 440 },
     singleton:   true,
   },
   {
@@ -49,6 +49,15 @@ export const appRegistry: AppDefinition[] = [
     defaultSize: { width: 740, height: 500 },
     minSize:     { width: 480, height: 320 },
     singleton:   false,
+  },
+  {
+    id:          "achievements",
+    title:       "Achievements",
+    icon:        "🏆",
+    description: "Awards & recognition",
+    defaultSize: { width: 640, height: 480 },
+    minSize:     { width: 480, height: 360 },
+    singleton:   true,
   },
   {
     id:          "systemLog",
@@ -73,8 +82,8 @@ export const appRegistry: AppDefinition[] = [
     title:       "Contact",
     icon:        "✉",
     description: "Establish connection",
-    defaultSize: { width: 560, height: 480 },
-    minSize:     { width: 420, height: 360 },
+    defaultSize: { width: 560, height: 500 },
+    minSize:     { width: 420, height: 380 },
     singleton:   true,
   },
   {

@@ -9,6 +9,7 @@ export type AppId =
   | "resume"
   | "contact"
   | "settings"
+  | "achievements"
   | "fileExplorer"
   | "secret";
 

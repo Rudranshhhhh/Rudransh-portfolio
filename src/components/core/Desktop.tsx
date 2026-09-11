@@ -19,10 +19,11 @@ const DESKTOP_ICONS: { appId: AppId; col: number; row: number }[] = [
   { appId: "skills",        col: 0, row: 2 },
   { appId: "lab",           col: 0, row: 3 },
   { appId: "terminal",      col: 0, row: 4 },
-  { appId: "systemLog",     col: 0, row: 5 },
-  { appId: "resume",        col: 0, row: 6 },
-  { appId: "contact",       col: 0, row: 7 },
-  { appId: "settings",      col: 0, row: 8 },
+  { appId: "achievements",  col: 0, row: 5 },
+  { appId: "systemLog",     col: 0, row: 6 },
+  { appId: "resume",        col: 0, row: 7 },
+  { appId: "contact",       col: 0, row: 8 },
+  { appId: "settings",      col: 0, row: 9 },
 ];
 
 export function Desktop() {

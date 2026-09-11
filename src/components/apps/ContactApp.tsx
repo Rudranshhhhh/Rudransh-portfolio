@@ -34,7 +34,8 @@ export function ContactApp() {
   const LINKS = [
     { label: "Email",    value: personal.email,    href: `mailto:${personal.email}`,   icon: "✉" },
     { label: "GitHub",   value: personal.github,   href: personal.github,              icon: "⊹" },
-    { label: "LinkedIn", value: personal.linkedin, href: personal.linkedin,            icon: "◎" },
+    { label: "LinkedIn", value: personal.linkedin, href: `https://${personal.linkedin}`, icon: "◎" },
+    { label: "Phone",    value: personal.phone,    href: `tel:${personal.phone}`,      icon: "◌" },
   ];
 
   return (

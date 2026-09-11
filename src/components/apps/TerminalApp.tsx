@@ -3,6 +3,7 @@ import { cn } from "../../utils/cn";
 import { personal } from "../../data/config";
 import { projects } from "../../data/projects";
 import { skillCategories } from "../../data/skills";
+import { achievements } from "../../data/achievements";
 import { useWindows } from "../../context/WindowContext";
 import type { AppId } from "../../types";
 
@@ -29,15 +30,16 @@ function buildOutput(cmd: string, openWindow: (id: AppId) => void): HistoryEntry
         "┌─ RUDRANSH.OS TERMINAL ──────────────────────────────┐",
         "│                                                      │",
         "│  whoami          System identification              │",
-        "│  projects        List all projects                  │",
-        "│  skills          Display capabilities               │",
-        "│  experience      Work & education history           │",
+        "│  projects        Project index                      │",
+        "│  skills          System capabilities                │",
+        "│  education       Education history                  │",
+        "│  achievements    Awards & recognition               │",
         "│  github          Open GitHub profile                │",
         "│  contact         Contact information                │",
-        "│  open <app>      Open an application                │",
-        "│  clear           Clear terminal                     │",
         "│  neofetch        System info                        │",
         "│  ls              List directory                     │",
+        "│  open <app>      Open an application                │",
+        "│  clear           Clear terminal                     │",
         "│  sudo reveal --secret  ???                          │",
         "│                                                      │",
         "└──────────────────────────────────────────────────────┘",
@@ -49,13 +51,19 @@ function buildOutput(cmd: string, openWindow: (id: AppId) => void): HistoryEntry
     return [{
       type: "output",
       content: [
-        `${personal.name}`,
+        `${personal.fullName}`,
+        ``,
         `${personal.title}`,
         `${personal.tagline}`,
         ``,
         `University:  ${personal.university}`,
         `Degree:      ${personal.degree}`,
-        `Status:      ${personal.availability}`,
+        `Period:      ${personal.year}`,
+        `GPA:         ${personal.gpa}`,
+        `Location:    ${personal.location}`,
+        ``,
+        `Current focus:`,
+        ...personal.focus.map(f => `  > ${f}`),
       ],
     }];
   }
@@ -65,14 +73,15 @@ function buildOutput(cmd: string, openWindow: (id: AppId) => void): HistoryEntry
       type: "output",
       content: [
         ``,
-        `    ██████   ${personal.name}@rudransh-os`,
-        `   ██░░░██  ─────────────────────────────`,
-        `   ██   ██  OS:       RUDRANSH.OS v1.0`,
-        `   ██████   Host:     ${personal.university}`,
-        `            Role:     ${personal.title}`,
-        `            Focus:    Software · AI · Robotics`,
-        `            Status:   ${personal.availability}`,
-        `            Email:    ${personal.email}`,
+        `    ██████   ${personal.fullName}@rudransh-os`,
+        `   ██░░░██  ─────────────────────────────────`,
+        `   ██   ██  OS:         RUDRANSH.OS v1.0`,
+        `   ██████   University: ${personal.university}`,
+        `            Role:       AI Engineer · Backend Dev`,
+        `            Spec:       Voice & LLM Applications`,
+        `            GPA:        ${personal.gpa}`,
+        `            Location:   ${personal.location}`,
+        `            Status:     ${personal.availability}`,
         ``,
       ],
     }];
@@ -80,14 +89,19 @@ function buildOutput(cmd: string, openWindow: (id: AppId) => void): HistoryEntry
 
   if (trimmed === "projects") {
     const lines = [
-      `Loading project index...`,
+      `PROJECT INDEX`,
+      `──────────────────────────────────────────────`,
       ``,
-      `/Projects`,
     ];
     projects.forEach((p, i) => {
-      lines.push(`  ${i === projects.length - 1 ? "└──" : "├──"} ${p.name}  [${p.category}] [${p.year}]`);
+      lines.push(`[0${i + 1}] ${p.name.toUpperCase()}`);
+      lines.push(`     ${p.shortDescription.slice(0, 72)}...`);
+      lines.push(`     STATUS: ${p.status.toUpperCase()}`);
+      if (p.liveUrl)   lines.push(`     URL: ${p.liveUrl}`);
+      if (p.githubUrl) lines.push(`     GITHUB: ${p.githubUrl}`);
+      lines.push(``);
     });
-    lines.push(``, `Type: open projects — to explore in the GUI`);
+    lines.push(`Type: open projects — to explore in the GUI`);
     return [{ type: "output", content: lines }];
   }
 
@@ -109,12 +123,19 @@ function buildOutput(cmd: string, openWindow: (id: AppId) => void): HistoryEntry
     return [{
       type: "output",
       content: [
-        `Education`,
-        `  ${personal.university}`,
-        `  ${personal.degree}`,
-        `  ${personal.year}`,
+        `/education`,
         ``,
-        `For full timeline: open systemLog`,
+        `${personal.university}`,
+        `────────────────────────────────────────`,
+        ``,
+        `${personal.degree}`,
+        `${personal.year}`,
+        ``,
+        `GPA`,
+        `${personal.gpa}`,
+        ``,
+        `STATUS`,
+        `CURRENTLY ENROLLED`,
       ],
     }];
   }
@@ -124,6 +145,24 @@ function buildOutput(cmd: string, openWindow: (id: AppId) => void): HistoryEntry
     return [{ type: "output", content: [`Opening GitHub → ${personal.github}`] }];
   }
 
+  if (trimmed === "achievements") {
+    const lines = [
+      `ACHIEVEMENT INDEX`,
+      `──────────────────────────────────────────────`,
+      ``,
+    ];
+    achievements.forEach((a) => {
+      lines.push(a.title.toUpperCase());
+      if (a.rank)         lines.push(`  GLOBAL RANK:  ${a.rank}`);
+      if (a.participants) lines.push(`  PARTICIPANTS: ${a.participants}`);
+      if (a.countries)    lines.push(`  COUNTRIES:    ${a.countries}`);
+      if (a.date)         lines.push(`  DATE:         ${a.date}`);
+      if (a.built)        lines.push(``, `  Built: ${a.built}`);
+      lines.push(``);
+    });
+    return [{ type: "output", content: lines }];
+  }
+
   if (trimmed === "contact") {
     return [{
       type: "output",
@@ -131,8 +170,10 @@ function buildOutput(cmd: string, openWindow: (id: AppId) => void): HistoryEntry
         `ESTABLISH CONNECTION`,
         ``,
         `  Email:    ${personal.email}`,
+        `  Phone:    ${personal.phone}`,
         `  GitHub:   ${personal.github}`,
         `  LinkedIn: ${personal.linkedin}`,
+        `  Location: ${personal.location}`,
       ],
     }];
   }
@@ -180,16 +221,19 @@ function buildOutput(cmd: string, openWindow: (id: AppId) => void): HistoryEntry
   if (trimmed.startsWith("open ")) {
     const target = trimmed.replace("open ", "").trim();
     const appMap: Record<string, AppId> = {
-      projects:  "projects",
-      profile:   "systemProfile",
-      about:     "systemProfile",
-      skills:    "skills",
-      lab:       "lab",
-      terminal:  "terminal",
-      log:       "systemLog",
-      resume:    "resume",
-      contact:   "contact",
-      settings:  "settings",
+      projects:     "projects",
+      profile:      "systemProfile",
+      about:        "systemProfile",
+      skills:       "skills",
+      capabilities: "skills",
+      lab:          "lab",
+      terminal:     "terminal",
+      log:          "systemLog",
+      timeline:     "systemLog",
+      resume:       "resume",
+      contact:      "contact",
+      settings:     "settings",
+      achievements: "achievements",
     };
     const appId = appMap[target];
     if (appId) {
@@ -221,7 +265,7 @@ function buildOutput(cmd: string, openWindow: (id: AppId) => void): HistoryEntry
   }];
 }
 
-const SUGGESTIONS = ["help", "whoami", "projects", "skills", "neofetch", "github", "contact", "ls", "clear", "sudo reveal --secret", "open projects", "open resume"];
+const SUGGESTIONS = ["help", "whoami", "projects", "skills", "achievements", "neofetch", "github", "contact", "education", "ls", "clear", "sudo reveal --secret", "open projects", "open resume", "open achievements"];
 
 export function TerminalApp({ windowId }: TerminalAppProps) {
   const { openWindow } = useWindows();

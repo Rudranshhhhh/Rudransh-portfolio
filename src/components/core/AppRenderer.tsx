@@ -11,6 +11,7 @@ const ResumeApp      = lazy(() => import("../apps/ResumeApp").then(m => ({ defau
 const ContactApp     = lazy(() => import("../apps/ContactApp").then(m => ({ default: m.ContactApp })));
 const SettingsApp    = lazy(() => import("../apps/SettingsApp").then(m => ({ default: m.SettingsApp })));
 const SecretApp      = lazy(() => import("../apps/SecretApp").then(m => ({ default: m.SecretApp })));
+const AchievementsApp = lazy(() => import("../apps/AchievementsApp").then(m => ({ default: m.AchievementsApp })));
 
 function AppLoader() {
   return (
@@ -39,6 +40,7 @@ export function AppRenderer({ appId, windowId }: AppRendererProps) {
       {appId === "resume"        && <ResumeApp />}
       {appId === "contact"       && <ContactApp />}
       {appId === "settings"      && <SettingsApp />}
+      {appId === "achievements"  && <AchievementsApp />}
       {appId === "secret"        && <SecretApp />}
     </Suspense>
   );
