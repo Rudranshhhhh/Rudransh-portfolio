@@ -170,7 +170,6 @@ function buildOutput(cmd: string, openWindow: (id: AppId) => void): HistoryEntry
         `ESTABLISH CONNECTION`,
         ``,
         `  Email:    ${personal.email}`,
-        `  Phone:    ${personal.phone}`,
         `  GitHub:   ${personal.github}`,
         `  LinkedIn: ${personal.linkedin}`,
         `  Location: ${personal.location}`,

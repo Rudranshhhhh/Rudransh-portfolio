@@ -15,7 +15,6 @@ export const personal = {
   gpa:        "8.4",
 
   email:      "rudransh2310@gmail.com",
-  phone:      "8217792520",
   github:     "https://github.com/Rudranshhhhh",
   linkedin:   "https://linkedin.com/in/rudransh-singh23",
   resumeUrl:  "/resume.pdf",

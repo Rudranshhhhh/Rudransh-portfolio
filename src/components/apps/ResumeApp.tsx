@@ -70,10 +70,6 @@ export function ResumeApp() {
                 {personal.email}
               </a>
               <span>·</span>
-              <a href={`tel:${personal.phone}`} className="hover:text-os-accent transition-colors">
-                {personal.phone}
-              </a>
-              <span>·</span>
               <a href={personal.github} target="_blank" rel="noopener noreferrer" className="hover:text-os-accent transition-colors">
                 GitHub
               </a>
