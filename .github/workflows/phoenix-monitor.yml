@@ -35,14 +35,21 @@ jobs:
             npm install
           fi
           if [ -f package.json ]; then
-            node -e 'const p=require("./package.json"); if (p.scripts?.typecheck) process.exit(require("child_process").spawnSync("npm",["run","typecheck"],{stdio:"inherit"}).status ?? 1)'
+            # Capture typecheck output for Phoenix evidence
+            npm run typecheck 2>&1 | tee /tmp/typecheck_output.txt || true
+            # Fail the step if typecheck failed
+            if grep -q "error TS" /tmp/typecheck_output.txt 2>/dev/null; then
+              echo "TypeScript errors found:"
+              cat /tmp/typecheck_output.txt
+              exit 1
+            fi
             node -e 'const p=require("./package.json"); if (p.scripts?.lint) process.exit(require("child_process").spawnSync("npm",["run","lint"],{stdio:"inherit"}).status ?? 1)'
             node -e 'const p=require("./package.json"); if (p.scripts?.test) process.exit(require("child_process").spawnSync("npm",["test"],{stdio:"inherit"}).status ?? 1)'
             node -e 'const p=require("./package.json"); if (p.scripts?.build) process.exit(require("child_process").spawnSync("npm",["run","build"],{stdio:"inherit"}).status ?? 1)'
           elif [ -f requirements.txt ] || [ -f pyproject.toml ]; then
             python -m pip install --upgrade pip
             if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-            if [ -d tests ]; then pip install pytest; pytest -q; fi
+            if [ -d tests ]; then pip install pytest; pytest -q 2>&1 | tee /tmp/typecheck_output.txt; fi
           else
             echo "Phoenix could not detect a supported project manifest."
           fi
@@ -64,10 +71,10 @@ jobs:
             exit 1
           fi
 
-          # Collect tsc output (up to 4000 chars)
-          LOGS="TypeScript type error detected in repository"
-          if [ -f /tmp/validate_output.txt ]; then
-            LOGS=$(tail -c 4000 /tmp/validate_output.txt | sed 's/"/\\"/g' | tr '\n' ' ')
+          # Collect tsc output (up to 4000 chars) — this is the key evidence for Phoenix
+          LOGS="No output captured"
+          if [ -f /tmp/typecheck_output.txt ] && [ -s /tmp/typecheck_output.txt ]; then
+            LOGS=$(tail -c 4000 /tmp/typecheck_output.txt | sed 's/"/\\"/g' | tr '\n' ' ')
           fi
 
           PAYLOAD=$(jq -n \
