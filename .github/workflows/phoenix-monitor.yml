@@ -1,0 +1,36 @@
+name: Phoenix Monitor
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate repository
+        shell: bash
+        run: |
+          set -e
+          if [ -f package-lock.json ]; then
+            npm ci
+          elif [ -f package.json ]; then
+            npm install
+          fi
+          if [ -f package.json ]; then
+            node -e 'const p=require("./package.json"); if (p.scripts?.lint) process.exit(require("child_process").spawnSync("npm",["run","lint"],{stdio:"inherit"}).status ?? 1)'
+            node -e 'const p=require("./package.json"); if (p.scripts?.test) process.exit(require("child_process").spawnSync("npm",["test"],{stdio:"inherit"}).status ?? 1)'
+            node -e 'const p=require("./package.json"); if (p.scripts?.build) process.exit(require("child_process").spawnSync("npm",["run","build"],{stdio:"inherit"}).status ?? 1)'
+          elif [ -f requirements.txt ] || [ -f pyproject.toml ]; then
+            python -m pip install --upgrade pip
+            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+            if [ -d tests ]; then pip install pytest; pytest -q; fi
+          else
+            echo "Phoenix could not detect a supported project manifest."
+          fi
+          if [ -f Dockerfile ]; then docker build -t phoenix-monitor:ci .; fi
