@@ -1,10 +1,10 @@
-﻿// Phoenix self-healing test — deliberate type error v2
-// A string assigned to a number — Phoenix should fix this automatically.
+﻿// Phoenix self-healing test — deliberate type errors (v3)
+// Phoenix will clone this repo, read this file, and fix these errors.
 
-export const buggyValue: number = "hello world";  // ← TS2322
+export const buggyValue: number = "hello world";
 
 export function brokenAdd(a: number, b: number): string {
-  return a + b;  // ← return type mismatch
+  return a + b;
 }
 
-export const anotherBug: boolean = 42;  // ← TS2322: number not assignable to boolean
+export const anotherBug: boolean = 42;
