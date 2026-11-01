@@ -1,11 +1,10 @@
-// Phoenix self-healing test — deliberate type error
-// This file intentionally assigns a string to a number variable.
-// Phoenix will detect the typecheck failure, diagnose this file,
-// generate a fix (change "hello world" to a number or fix the type),
-// validate it, and open a PR.
+﻿// Phoenix self-healing test — deliberate type error v2
+// A string assigned to a number — Phoenix should fix this automatically.
 
-export const buggyValue: number = "hello world";  // ← type error: string → number
+export const buggyValue: number = "hello world";  // ← TS2322
 
 export function brokenAdd(a: number, b: number): string {
-  return a + b;  // ← type error: returns number but declared string
+  return a + b;  // ← return type mismatch
 }
+
+export const anotherBug: boolean = 42;  // ← TS2322: number not assignable to boolean
