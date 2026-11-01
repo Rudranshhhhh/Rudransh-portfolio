@@ -1,6 +1,5 @@
 ﻿// Phoenix self-healing test — deliberate type errors
-// Phoenix will detect this CI failure, diagnose, patch, validate, and open a PR.
-// Triggered at: 20261102003253
+// Phoenix will clone this repo, read this file, and fix these errors.
 
 export const buggyValue: number = "hello world";
 
