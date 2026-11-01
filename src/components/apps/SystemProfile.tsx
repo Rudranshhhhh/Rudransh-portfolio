@@ -57,7 +57,7 @@ export function SystemProfile() {
           <FIELD_ROW label="University" value={personal.university} />
           <FIELD_ROW label="Degree"     value={personal.degree} />
           <FIELD_ROW label="Period"     value={personal.year} mono />
-          <FIELD_ROW label="GPA"        value={personal.gpa} mono accent />
+          <FIELD_ROW label="GPA"        value={personal.gpA} mono accent />
           <FIELD_ROW label="Location"   value={personal.location} />
         </div>
 
