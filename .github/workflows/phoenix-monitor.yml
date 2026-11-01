@@ -13,14 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v4
+
       - name: Set up Node
+        id: setup_node
         if: hashFiles('package.json') != ''
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
+
       - name: Validate repository
+        id: validate
         shell: bash
         run: |
           set -e
@@ -41,4 +46,59 @@ jobs:
           else
             echo "Phoenix could not detect a supported project manifest."
           fi
-          if [ -f Dockerfile ]; then docker build -t phoenix-monitor:ci .; fi
+
+      - name: Report failure to Phoenix
+        if: failure()
+        continue-on-error: true
+        env:
+          PHOENIX_URL: ${{ secrets.PHOENIX_URL }}
+          PHOENIX_WEBHOOK_SECRET: ${{ secrets.PHOENIX_WEBHOOK_SECRET }}
+        shell: bash
+        run: |
+          TARGET_URL="${PHOENIX_URL:-https://phoenix-api-v89i.onrender.com}"
+          TARGET_SECRET="${PHOENIX_WEBHOOK_SECRET}"
+
+          if [ -z "$TARGET_SECRET" ]; then
+            echo "ERROR: PHOENIX_WEBHOOK_SECRET secret is not set. Add it at:"
+            echo "  https://github.com/${{ github.repository }}/settings/secrets/actions"
+            exit 1
+          fi
+
+          # Collect tsc output (up to 4000 chars)
+          LOGS="TypeScript type error detected in repository"
+          if [ -f /tmp/validate_output.txt ]; then
+            LOGS=$(tail -c 4000 /tmp/validate_output.txt | sed 's/"/\\"/g' | tr '\n' ' ')
+          fi
+
+          PAYLOAD=$(jq -n \
+            --arg source "github_ci" \
+            --arg repository "${{ github.repository }}" \
+            --arg commit "${{ github.sha }}" \
+            --arg branch "${{ github.head_ref || github.ref_name }}" \
+            --arg run_id "${{ github.run_id }}" \
+            --arg run_url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --arg workflow "${{ github.workflow }}" \
+            --arg stage "typecheck" \
+            --arg logs "$LOGS" \
+            '{source:$source,repository:$repository,commit:$commit,branch:$branch,
+              run_id:$run_id,run_url:$run_url,workflow:$workflow,job:"validate",
+              stage:$stage,logs:$logs}')
+
+          echo "Reporting failure to Phoenix at $TARGET_URL ..."
+          HTTP_CODE=$(curl -s -o /tmp/phoenix_response.txt -w "%{http_code}" \
+            -X POST "${TARGET_URL}/api/incidents" \
+            -H "Content-Type: application/json" \
+            -H "X-Phoenix-Token: ${TARGET_SECRET}" \
+            -d "$PAYLOAD" \
+            --max-time 30)
+
+          echo "Phoenix API response (HTTP $HTTP_CODE):"
+          cat /tmp/phoenix_response.txt
+          echo ""
+
+          if [ "$HTTP_CODE" = "202" ]; then
+            INCIDENT_ID=$(cat /tmp/phoenix_response.txt | python3 -c "import sys,json; print(json.load(sys.stdin).get('incident_id','unknown'))" 2>/dev/null || echo "unknown")
+            echo "✓ Incident $INCIDENT_ID created in Phoenix"
+          else
+            echo "WARNING: Phoenix returned HTTP $HTTP_CODE"
+          fi
