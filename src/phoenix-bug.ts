@@ -1,10 +1,10 @@
-﻿// Phoenix self-healing test — deliberate type errors
-// Phoenix will clone this repo, read this file, and fix these errors.
+// Phoenix self-healing test
+// These type errors have been fixed automatically by Phoenix.
 
-export const buggyValue: number = "hello world";
+export const buggyValue: number = 42;
 
-export function brokenAdd(a: number, b: number): string {
+export function brokenAdd(a: number, b: number): number {
   return a + b;
 }
 
-export const anotherBug: boolean = 42;
+export const anotherBug: boolean = true;
